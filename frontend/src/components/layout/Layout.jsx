@@ -32,7 +32,7 @@ const Sidebar = () => {
         </div>
         {!collapsed && (
           <div className="ms-2 overflow-hidden">
-            <div className="fw-bold text-white text-truncate" style={{ fontSize: 15 }}>UniSMS</div>
+            <div className="fw-bold text-white text-truncate" style={{ fontSize: 15 }}>USMS</div>
             <div className="text-secondary" style={{ fontSize: 11 }}>Student Management</div>
           </div>
         )}

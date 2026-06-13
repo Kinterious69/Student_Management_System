@@ -30,7 +30,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center justify-content-center " style={{backgroundColor:"blueviolet"}}>
+    <div className="min-vh-100 d-flex align-items-center justify-content-center " style={{backgroundColor:"#1a1a1a"}}>
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-5 col-lg-4">
@@ -39,37 +39,38 @@ const Login = () => {
                 style={{ width: 60, height: 60 }}>
                 <i className="bi bi-mortarboard-fill text-white fs-4"></i>
               </div>
-              <h2 className="fw-bold">UniSMS</h2>
-              <p className="text-muted">Student Management System</p>
+              <h2 className="fw-bold text-white">USMS</h2>
+              <p className="text-white">University Student Management System</p>
             </div>
             <div className="card shadow-sm border-0">
-              <div className="card-body p-4">
-                <h5 className="fw-semibold mb-4">Sign in to your account</h5>
+              <div className="card-body p-4"  style={{backgroundColor:"#2b3035"}}>
+                <h5 className="fw-semibold mb-4 text-center text-white">Sign in to your account</h5>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
-                    <label className="form-label fw-medium">Email address</label>
+                    <label className="form-label fw-medium text-white">Email address</label>
                     <input
                       type="email"
                       className="form-control"
                       name="email"
                       value={form.email}
                       onChange={handleChange}
-                      placeholder="you@example.com"
+                      placeholder="enter your email"
                       autoComplete="email"
                       required
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="form-label fw-medium">Password</label>
+                    <label className="form-label fw-medium text-white">Password</label>
                     <input
                       type="password"
-                      className="form-control"
+                      className="form-control "
                       name="password"
                       value={form.password}
                       onChange={handleChange}
-                      placeholder="••••••••"
+                      placeholder="enter your password"
                       autoComplete="current-password"
                       required
+                    
                     />
                   </div>
                   <button
@@ -82,15 +83,13 @@ const Login = () => {
                     ) : 'Sign in'}
                   </button>
                 </form>
-                <p className="text-center text-muted mt-3 mb-0 small">
+                <p className="text-center  mt-3 mb-0 small text-white">
                   Don't have an account?{' '}
                   <Link to="/register" className="text-primary fw-medium text-decoration-none">Register</Link>
                 </p>
               </div>
             </div>
-            <p className="text-center text-muted mt-3 small">
-              Demo admin: <strong>admin@utm.edu</strong> / <strong>admin123</strong>
-            </p>
+            
           </div>
         </div>
       </div>

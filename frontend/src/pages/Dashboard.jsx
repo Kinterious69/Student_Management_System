@@ -49,7 +49,7 @@ const Dashboard = () => {
         <div className="mb-4">
           <h4 className="fw-bold mb-1">
             Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 17 ? 'afternoon' : 'evening'},{' '}
-            {user?.name?.split(' ')[0]} 👋
+            {user?.name?.split(' ')[0]} 
           </h4>
           <p className="text-muted mb-0">
             {isAdmin ? "Here's what's happening in your institution today." : "Welcome to your student portal."}
@@ -78,7 +78,7 @@ const Dashboard = () => {
               {/* Grade Distribution Chart */}
               <div className="col-lg-6">
                 <div className="card border-0 shadow-sm h-100">
-                  <div className="card-body">
+                  <div className="card-body" style={{backgroundColor:"#EEEEEE"}}>
                     <h6 className="fw-semibold mb-3">Grade Distribution</h6>
                     {loading ? (
                       <div className="d-flex justify-content-center py-5">

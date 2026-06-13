@@ -4,7 +4,7 @@ import { studentAPI } from '../services/api.js';
 import Layout from '../components/layout/Layout.jsx';
 import toast from 'react-hot-toast';
 
-const PROGRAMS = ['Computer Science', 'Information Technology', 'Business Administration',
+const PROGRAMS = ['Computer Science', 'Information Systems', 'Business Administration',
   'Engineering', 'Mathematics', 'Physics', 'Economics', 'Law', 'Medicine', 'Other'];
 
 const STATUS_BADGE = { Active: 'success', Inactive: 'secondary', Graduated: 'info', Suspended: 'danger' };
@@ -238,7 +238,7 @@ const Students = () => {
                           onChange={handleChange} required />
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label fw-medium">Phone</label>
+                        <label className="form-label fw-medium">Phone </label>
                         <input className="form-control" name="phone" value={form.phone}
                           onChange={handleChange} placeholder="+220 xxx xxxx" />
                       </div>
@@ -254,7 +254,7 @@ const Students = () => {
                         <label className="form-label fw-medium">Year of Study *</label>
                         <select className="form-select" name="yearOfStudy" value={form.yearOfStudy}
                           onChange={handleChange} required>
-                          {[1, 2, 3, 4, 5, 6].map(y => <option key={y} value={y}>Year {y}</option>)}
+                          {[1, 2, 3, 4].map(y => <option key={y} value={y}>Year {y}</option>)}
                         </select>
                       </div>
                       <div className="col-md-3">

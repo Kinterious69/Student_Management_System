@@ -19,7 +19,7 @@ const Enrollments = () => {
   const [selectedEnrollment, setSelectedEnrollment] = useState(null);
   const [students, setStudents] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [enrollForm, setEnrollForm] = useState({ student: '', course: '', semester: 'First', academicYear: '2025/2026' });
+  const [enrollForm, setEnrollForm] = useState({ student: '', course: '', semester: 'First', academicYear: '2026/2027' });
   const [gradeForm, setGradeForm] = useState({ grade: '', score: '', status: 'Enrolled', remarks: '' });
   const [saving, setSaving] = useState(false);
 

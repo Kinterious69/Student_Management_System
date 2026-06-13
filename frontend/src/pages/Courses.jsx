@@ -5,12 +5,12 @@ import { useAuth } from '../context/AuthContext.jsx';
 import toast from 'react-hot-toast';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const DEPTS = ['Computer Science', 'Information Technology', 'Business', 'Engineering',
+const DEPTS = ['Computer Science', 'Information Systems', 'Business', 'Engineering',
   'Mathematics', 'Physics', 'Law', 'Other'];
 
 const initialForm = {
   courseCode: '', title: '', description: '', credits: 3, instructor: '',
-  department: '', semester: 'First', academicYear: '2025/2026',
+  department: '', semester: 'First', academicYear: '2026/2027',
   maxCapacity: 30, status: 'Active',
   schedule: { days: [], time: '', room: '' },
 };
@@ -150,7 +150,7 @@ const Courses = () => {
             {courses.map(c => (
               <div key={c._id} className="col-md-6 col-lg-4">
                 <div className="card border-0 shadow-sm h-100">
-                  <div className="card-body">
+                  <div className="card-body" style={{backgroundColor:"#EEEEEE"}}>
                     <div className="d-flex justify-content-between align-items-start mb-2">
                       <code className="text-primary fw-bold">{c.courseCode}</code>
                       <span className={`badge bg-${semesterColor[c.semester]}-subtle text-${semesterColor[c.semester]}`}>
@@ -204,105 +204,110 @@ const Courses = () => {
         )}
 
         {/* Create/Edit Modal */}
-        {showModal && isAdmin && (
-          <div className="modal show d-block" style={{ background: 'rgba(0,0,0,0.4)' }}>
-            <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title fw-semibold">{editing ? 'Edit Course' : 'Add New Course'}</h5>
-                  <button type="button" className="btn-close" onClick={() => setShowModal(false)} />
+     {/* Create/Edit Modal */}
+{showModal && isAdmin && (
+  <div className="modal show d-block" style={{ background: 'rgba(0,0,0,0.4)', position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1050 }}>
+    {/* FIX: Form now wraps the modal structures safely */}
+    <form onSubmit={handleSubmit} className="h-100">
+      <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title fw-semibold">{editing ? 'Edit Course' : 'Add New Course'}</h5>
+            <button type="button" className="btn-close" onClick={() => setShowModal(false)} />
+          </div>
+          
+          <div className="modal-body">
+            <div className="row g-3">
+              <div className="col-md-4">
+                <label className="form-label fw-medium">Course Code</label>
+                <input className="form-control" name="courseCode" value={form.courseCode}
+                  onChange={handleChange} placeholder="e.g. CS101" required />
+              </div>
+              <div className="col-md-8">
+                <label className="form-label fw-medium">Course Title</label>
+                <input className="form-control" name="title" value={form.title}
+                  onChange={handleChange} required />
+              </div>
+              <div className="col-12">
+                <label className="form-label fw-medium">Description</label>
+                <textarea className="form-control" name="description" value={form.description}
+                  onChange={handleChange} rows={2} />
+              </div>
+              <div className="col-md-4">
+                <label className="form-label fw-medium">Credits *</label>
+                <input type="number" className="form-control" name="credits" value={form.credits}
+                  onChange={handleChange} min={1} max={6} required />
+              </div>
+              <div className="col-md-4">
+                <label className="form-label fw-medium">Max Capacity</label>
+                <input type="number" className="form-control" name="maxCapacity" value={form.maxCapacity}
+                  onChange={handleChange} min={1} required />
+              </div>
+              <div className="col-md-4">
+                <label className="form-label fw-medium">Status</label>
+                <select className="form-select" name="status" value={form.status} onChange={handleChange}>
+                  <option>Active</option><option>Inactive</option><option>Completed</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <label className="form-label fw-medium">Instructor</label>
+                <input className="form-control" name="instructor" value={form.instructor}
+                  onChange={handleChange} required />
+              </div>
+              <div className="col-md-6">
+                <label className="form-label fw-medium">Department</label>
+                <select className="form-select" name="department" value={form.department}
+                  onChange={handleChange} required>
+                  <option value="">Select department</option>
+                  {DEPTS.map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </div>
+              <div className="col-md-4">
+                <label className="form-label fw-medium">Semester</label>
+                <select className="form-select" name="semester" value={form.semester} onChange={handleChange}>
+                  <option>First</option><option>Second</option><option>Summer</option>
+                </select>
+              </div>
+              <div className="col-md-4">
+                <label className="form-label fw-medium">Academic Year</label>
+                <input className="form-control" name="academicYear" value={form.academicYear}
+                  onChange={handleChange} placeholder="2025/2026" required />
+              </div>
+              <div className="col-md-4">
+                <label className="form-label fw-medium">Time</label>
+                <input className="form-control" name="time" value={form.schedule.time}
+                  onChange={handleScheduleChange} placeholder="08:00 - 10:00" />
+              </div>
+              <div className="col-md-6">
+                <label className="form-label fw-medium">Room</label>
+                <input className="form-control" name="room" value={form.schedule.room}
+                  onChange={handleScheduleChange}  />
+              </div>
+              <div className="col-md-6">
+                <label className="form-label fw-medium">Days</label>
+                <div className="d-flex gap-2 flex-wrap mt-1">
+                  {DAYS.map(d => (
+                    <button key={d} type="button"
+                      className={`btn btn-sm ${form.schedule.days.includes(d) ? 'btn-primary' : 'btn-outline-secondary'}`}
+                      onClick={() => toggleDay(d)}>{d}</button>
+                  ))}
                 </div>
-                <form onSubmit={handleSubmit}>
-                  <div className="modal-body">
-                    <div className="row g-3">
-                      <div className="col-md-4">
-                        <label className="form-label fw-medium">Course Code *</label>
-                        <input className="form-control" name="courseCode" value={form.courseCode}
-                          onChange={handleChange} placeholder="e.g. CS101" required />
-                      </div>
-                      <div className="col-md-8">
-                        <label className="form-label fw-medium">Course Title *</label>
-                        <input className="form-control" name="title" value={form.title}
-                          onChange={handleChange} required />
-                      </div>
-                      <div className="col-12">
-                        <label className="form-label fw-medium">Description</label>
-                        <textarea className="form-control" name="description" value={form.description}
-                          onChange={handleChange} rows={2} />
-                      </div>
-                      <div className="col-md-4">
-                        <label className="form-label fw-medium">Credits *</label>
-                        <input type="number" className="form-control" name="credits" value={form.credits}
-                          onChange={handleChange} min={1} max={6} required />
-                      </div>
-                      <div className="col-md-4">
-                        <label className="form-label fw-medium">Max Capacity *</label>
-                        <input type="number" className="form-control" name="maxCapacity" value={form.maxCapacity}
-                          onChange={handleChange} min={1} required />
-                      </div>
-                      <div className="col-md-4">
-                        <label className="form-label fw-medium">Status</label>
-                        <select className="form-select" name="status" value={form.status} onChange={handleChange}>
-                          <option>Active</option><option>Inactive</option><option>Completed</option>
-                        </select>
-                      </div>
-                      <div className="col-md-6">
-                        <label className="form-label fw-medium">Instructor *</label>
-                        <input className="form-control" name="instructor" value={form.instructor}
-                          onChange={handleChange} required />
-                      </div>
-                      <div className="col-md-6">
-                        <label className="form-label fw-medium">Department *</label>
-                        <select className="form-select" name="department" value={form.department}
-                          onChange={handleChange} required>
-                          <option value="">Select department</option>
-                          {DEPTS.map(d => <option key={d} value={d}>{d}</option>)}
-                        </select>
-                      </div>
-                      <div className="col-md-4">
-                        <label className="form-label fw-medium">Semester *</label>
-                        <select className="form-select" name="semester" value={form.semester} onChange={handleChange}>
-                          <option>First</option><option>Second</option><option>Summer</option>
-                        </select>
-                      </div>
-                      <div className="col-md-4">
-                        <label className="form-label fw-medium">Academic Year *</label>
-                        <input className="form-control" name="academicYear" value={form.academicYear}
-                          onChange={handleChange} placeholder="2025/2026" required />
-                      </div>
-                      <div className="col-md-4">
-                        <label className="form-label fw-medium">Time</label>
-                        <input className="form-control" name="time" value={form.schedule.time}
-                          onChange={handleScheduleChange} placeholder="08:00 - 10:00" />
-                      </div>
-                      <div className="col-md-6">
-                        <label className="form-label fw-medium">Room</label>
-                        <input className="form-control" name="room" value={form.schedule.room}
-                          onChange={handleScheduleChange} placeholder="e.g. LT-A" />
-                      </div>
-                      <div className="col-md-6">
-                        <label className="form-label fw-medium">Days</label>
-                        <div className="d-flex gap-2 flex-wrap mt-1">
-                          {DAYS.map(d => (
-                            <button key={d} type="button"
-                              className={`btn btn-sm ${form.schedule.days.includes(d) ? 'btn-primary' : 'btn-outline-secondary'}`}
-                              onClick={() => toggleDay(d)}>{d}</button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-outline-secondary" onClick={() => setShowModal(false)}>Cancel</button>
-                    <button type="submit" className="btn btn-primary" disabled={saving}>
-                      {saving ? <><span className="spinner-border spinner-border-sm me-1" />Saving...</> : 'Save Course'}
-                    </button>
-                  </div>
-                </form>
               </div>
             </div>
           </div>
-        )}
+
+          <div className="modal-footer">
+            <button type="button" className="btn btn-outline-secondary" onClick={() => setShowModal(false)}>Cancel</button>
+            <button type="submit" className="btn btn-primary" disabled={saving}>
+              {saving ? <><span className="spinner-border spinner-border-sm me-1" />Saving...</> : 'Save Course'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+)}
+
       </div>
     </Layout>
   );
